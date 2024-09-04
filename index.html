@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Super Hall</title>
+
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.8.2/core.css">
+
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2024.8.2/core.js"></script>
+<style>
+iframe{
+border:5px solid red;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+<iframe id="ifrm" width="1500" height="200" ></iframe>
+<button id="run" onclick='fun'>Run</button>
+</div>
+<script type="py" config="./pyscript.toml">
+from pyscript import when,document,display,HTML
+from bs4 import BeautifulSoup
+from lxml import etree
+import textwrap
+@when("click", "#run")
+def fun(event):
+    x=document.getElementById('ifrm').contentWindow.document.body.innerHTML
+    def etree_pretty(root, space="\t"):
+        for elem in root.iterdescendants():
+            if elem.text:
+               depth = int(elem.xpath("count(ancestor::*)")) + 1
+               temp_text = textwrap.dedent(elem.text).strip()
+               exec(temp_text)
+    html_str = x
+    root = etree.HTML(html_str)
+    etree_pretty(root)
+ </script>
+
+<script src=./main.js id="iframeContent">
+<pre contenteditable="true">
+import matplotlib.pyplot as plt
+
+x = [87,91,97,95]
+
+plt.hist(x)
+
+plt.show()
+</pre>
+</script>
+</body>
+</html>

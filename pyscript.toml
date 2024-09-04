@@ -1,0 +1,2 @@
+name = "Super Hall 1 Copy Copy Copy"
+packages = [ "beautifulsoup4", "lxml","pandas","matplotlib"]
